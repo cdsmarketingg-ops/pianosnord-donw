@@ -31,6 +31,7 @@ export default function App() {
     script.async = true;
     script.onload = () => {
       if (window.checkoutElements) {
+        // Initialize exactly as requested: checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel')
         window.checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
       }
     };
@@ -40,6 +41,11 @@ export default function App() {
       const existingScript = document.querySelector(`script[src="${script.src}"]`);
       if (existingScript) {
         document.body.removeChild(existingScript);
+      }
+      // Clear the container on unmount to prevent double rendering if React re-renders
+      const container = document.getElementById('hotmart-sales-funnel');
+      if (container) {
+        container.innerHTML = '';
       }
     };
   }, []);
