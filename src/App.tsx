@@ -25,24 +25,22 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Load Hotmart script
+    // Load Hotmart script exactly as requested
     const script = document.createElement('script');
     script.src = 'https://checkout.hotmart.com/lib/hotmart-checkout-elements.js';
     script.async = true;
     script.onload = () => {
       if (window.checkoutElements) {
-        // Initialize exactly as requested: checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel')
         window.checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
       }
     };
     document.body.appendChild(script);
 
     return () => {
-      const existingScript = document.querySelector(`script[src="${script.src}"]`);
-      if (existingScript) {
-        document.body.removeChild(existingScript);
+      // Clean up script and container on unmount
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
       }
-      // Clear the container on unmount to prevent double rendering if React re-renders
       const container = document.getElementById('hotmart-sales-funnel');
       if (container) {
         container.innerHTML = '';
@@ -81,10 +79,10 @@ export default function App() {
         <div className="text-center mb-10 md:mb-12 w-full">
           <p className="text-gray-500 text-xs md:text-sm mb-2">Inversión única y exclusiva:</p>
           <div className="relative inline-block scale-90 md:scale-100">
-            <span className="text-xl md:text-2xl text-gray-600 line-through absolute -top-5 md:-top-6 left-1/2 -translate-x-1/2">$24.00</span>
+            <span className="text-xl md:text-2xl text-gray-600 line-through absolute -top-5 md:-top-6 left-1/2 -translate-x-1/2">U$14.90</span>
             <div className="text-6xl md:text-8xl font-bold text-brand-orange flex items-start justify-center">
-              <span className="text-2xl md:text-3xl mt-3 md:mt-4">$</span>
-              <span>14</span>
+              <span className="text-2xl md:text-3xl mt-3 md:mt-4">U$</span>
+              <span>9</span>
               <span className="text-3xl md:text-4xl mt-3 md:mt-4">.90</span>
             </div>
           </div>
